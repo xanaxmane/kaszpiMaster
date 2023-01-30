@@ -29,8 +29,8 @@ app.post('/', async (req, res) => {
     const response = await openai.createCompletion({
       
       model: "text-davinci-003",
-      prompt: `${promtUser} , Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, és magyarul beszélj. A kaszpi.hu-nak dolgozol. Több féle opciót is ajánlj.`,
-        temperature: 0.7,
+      prompt: `Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, ajánlj több féle opciót is és magyarul beszélj. A kaszpi.hu-nak dolgozol. , ${promtUser} `,
+        temperature: 0.5,
   max_tokens: 1000,
   top_p: 1,
   frequency_penalty: 0,
