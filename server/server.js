@@ -25,10 +25,11 @@ app.post('/', async (req, res) => {
   try {
     const prompt = req.body.prompt;
 //      prompt: `${prompt} , és csak magyarul beszélj csak számítógép alkatrészekben segítesz részletesen leírod a specifikációját is és segítesz összerakni a gépet a vásárlónak egy kaszpi nevű boltnak vagy a supportja.`,
-
+    var promtUser = +prompt;
     const response = await openai.createCompletion({
+      
       model: "text-davinci-003",
-      prompt: `${prompt} , Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, és magyarul beszélj. A kaszpi.hu-nak dolgozol.`,
+      prompt: `${promtUser} , Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, és magyarul beszélj. A kaszpi.hu-nak dolgozol. Több féle opciót is ajánlj.`,
         temperature: 0.7,
   max_tokens: 1000,
   top_p: 1,
