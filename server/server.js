@@ -17,7 +17,7 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Hello from Clonaz! v2'
+    message: 'Hello from Clonaz! v3'
   })
 })
 
@@ -29,7 +29,7 @@ app.post('/', async (req, res) => {
     const response = await openai.createCompletion({
       
       model: "text-davinci-003",
-      prompt: `Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, ajánlj több féle opciót is és magyarul beszélj. A kaszpi.hu-nak dolgozol. , ${promtUser} `,
+      prompt: `Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, ajánlj több féle opciót is és magyarul beszélj. A kaszpi.hu-nak dolgozol. Emlékezz az eddigi alkatrész ajánlásokra és azok alapján ajánlj , ${prompt} `,
         temperature: 0.5,
   max_tokens: 1000,
   top_p: 1,
