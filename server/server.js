@@ -17,25 +17,34 @@ app.use(express.json())
 
 app.get('/', async (req, res) => {
   res.status(200).send({
-    message: 'Hello from Clonaz! v3'
+    message: 'Hello from Clonaz!'
   })
 })
 
+let previousResponses = [];
+if(!previousResponses[0]){
+  previousResponses.join("Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, ajánlj több féle opciót is és magyarul beszélj. A kaszpi.hu-nak dolgozol.")
+}
 app.post('/', async (req, res) => {
   try {
     const prompt = req.body.prompt;
-//      prompt: `${prompt} , és csak magyarul beszélj csak számítógép alkatrészekben segítesz részletesen leírod a specifikációját is és segítesz összerakni a gépet a vásárlónak egy kaszpi nevű boltnak vagy a supportja.`,
-    var promtUser = +prompt;
+    
+    // Add previous responses to the prompt for context
+    let context = previousResponses.join(" ");
+    let updatedPrompt = `${context} ${prompt}`;
+    
     const response = await openai.createCompletion({
-      
       model: "text-davinci-003",
-      prompt: `Viselkedj úgy, mint egy online support agent aki segít computer alkatrészeket kiválasztani a vásárlónak és abban is segít, hogy melyik alkatrész melyikkel kompatibilis, ajánlj több féle opciót is és magyarul beszélj. A kaszpi.hu-nak dolgozol. Emlékezz az eddigi alkatrész ajánlásokra és azok alapján ajánlj , ${prompt} `,
-        temperature: 0.5,
-  max_tokens: 1000,
-  top_p: 1,
-  frequency_penalty: 0,
-  presence_penalty: 0, // Number between -2.0 and 2.0. Positive values penalize new tokens based on whether they appear in the text so far, increasing the model's likelihood to talk about new topics.
+      prompt: updatedPrompt,
+      temperature: 0.5,
+      max_tokens: 1000,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
     });
+    
+    // Add the response to the list of previous responses
+    previousResponses.push(response.data.choices[0].text);
 
     res.status(200).send({
       bot: response.data.choices[0].text
