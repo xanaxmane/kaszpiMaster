@@ -98,7 +98,7 @@ const handleSubmit = async (e) => {
     // messageDiv.innerHTML = "..."
     loader(messageDiv)
 
-    const response = await fetch('https://kaszpiaisupport.onrender.com', {
+    const response = await fetch('https://kaszpiserver.onrender.com/', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
